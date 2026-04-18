@@ -6,6 +6,7 @@
 
 - `cursor/`：存放 Cursor 相关 skills
 - `openclaw/`：存放 OpenClaw 相关 skills
+- `agents/`：存放 `~/.agents/skills` 相关 skills
 - `scripts/`：仓库维护脚本
 - `Makefile`：标准化同步命令入口
 
@@ -29,6 +30,9 @@ openclaw/
     SKILL.md
   your-skill-name/
     SKILL.md
+agents/
+  your-skill-name/
+    SKILL.md
 ```
 
 ## 快速同步
@@ -46,6 +50,7 @@ chmod +x scripts/sync.sh
 
 - Cursor: `~/.cursor/skills`
 - OpenClaw: `~/.openclaw/workspace/skills`
+- Agents: `~/.agents/skills`
 
 执行命令：
 
@@ -69,5 +74,5 @@ make sync-commit-default
 ### 4) 自定义本地源目录（可选）
 
 ```bash
-CURSOR_SKILLS_SRC="你的路径" OPENCLAW_SKILLS_SRC="你的路径" make sync
+CURSOR_SKILLS_SRC="你的路径" OPENCLAW_SKILLS_SRC="你的路径" AGENTS_SKILLS_SRC="你的路径" make sync
 ```
