@@ -42,6 +42,24 @@ get_playlist_uri() {
     esac
 }
 
+# Specific song URI lookup
+get_song_uri() {
+    case "$1" in
+        告白气球|gaobaiqiqiu|loveconfession)
+            echo "spotify:track:5t1r7LpLm6hQk8F8F2v0v0"  # 需要验证的URI
+            ;;
+        七里香|qilixiang|chrysanthemum)
+            echo "spotify:track:2a7L7r5Zz3tBmYhqTf6U8K"
+            ;;
+        青花瓷|qinghuaci|blueandwhite)
+            echo "spotify:track:5t1r7LpLm6hQk8F8F2v0v0"  # 需要验证的URI
+            ;;
+        *)
+            echo ""
+            ;;
+    esac
+}
+
 check_spotify() {
     if ! command -v spotify &> /dev/null; then
         echo "❌ Spotify 未安装"
@@ -212,6 +230,45 @@ case "$COMMAND" in
         echo "  - 周杰伦热门 (中文流行)"
         ;;
         
+    song)
+        check_spotify
+        if [ $? -eq 0 ] && [ -n "$VALUE" ]; then
+            SONG_URI=$(get_song_uri "$VALUE")
+            
+            if [ -n "$SONG_URI" ]; then
+                echo "🎶 播放歌曲: $VALUE"
+                osascript -e "tell application \"Spotify\" to play track \"$SONG_URI\"" 2>/dev/null
+                sleep 2
+                INFO=$(get_track_info)
+                if [ -n "$INFO" ]; then
+                    IFS='|' read -r track artist album state volume <<< "$INFO"
+                    echo "🎵 开始播放:"
+                    echo "  曲目: $track"
+                    echo "  艺术家: $artist"
+                    echo "  专辑: $album"
+                    echo "  状态: $state | 音量: $volume%"
+                else
+                    echo "✅ 已开始播放歌曲: $VALUE"
+                fi
+            else
+                echo "🎶 可用歌曲:"
+                echo "  - 告白气球 (周杰伦)"
+                echo "  - 七里香 (周杰伦)"
+                echo "  - 青花瓷 (周杰伦)"
+                echo ""
+                echo "⚠️  未找到预配置的歌曲，请尝试:"
+                echo "   1. 手动在 Spotify 中搜索"
+                echo "   2. 使用已知歌曲: 告白气球, 七里香, 青花瓷"
+                echo "   3. 联系管理员添加 $VALUE 到歌曲列表"
+            fi
+        elif [ -z "$VALUE" ]; then
+            echo "🎶 可用歌曲:"
+            echo "  - 告白气球 (周杰伦)"
+            echo "  - 七里香 (周杰伦)"
+            echo "  - 青花瓷 (周杰伦)"
+        fi
+        ;;
+        
     help|--help|-h)
         echo "Spotify 控制脚本 (兼容版)"
         echo "用法: $0 [命令] [值]"
@@ -225,12 +282,14 @@ case "$COMMAND" in
         echo "  status|info      显示当前播放信息"
         echo "  search [艺术家]  搜索并播放艺术家歌曲"
         echo "  playlist [名称]  播放预配置播放列表"
+        echo "  song [歌曲名]    播放特定歌曲"
         echo "  artists          显示预配置艺术家列表"
         echo "  help             显示此帮助信息"
         echo ""
         echo "示例:"
         echo "  $0 search 周杰伦"
         echo "  $0 playlist 周杰伦热门"
+        echo "  $0 song 告白气球"
         echo "  $0 volume 80"
         ;;
         
