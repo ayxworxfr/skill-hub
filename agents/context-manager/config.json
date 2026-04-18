@@ -1,0 +1,17 @@
+{
+  "thresholds": {
+    "context_usage": 0.7,
+    "cache_hit": 0.2,
+    "cost": 0.5,
+    "rounds": 20
+  },
+  "compression": {
+    "light": {"keep_rounds": 10},
+    "medium": {"keep_rounds": 5},
+    "heavy": {"keep_rounds": 3}
+  },
+  "schedule": {
+    "enabled": true,
+    "interval_minutes": 30
+  }
+}
