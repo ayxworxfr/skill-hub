@@ -76,3 +76,38 @@ make sync-commit-default
 ```bash
 CURSOR_SKILLS_SRC="你的路径" OPENCLAW_SKILLS_SRC="你的路径" AGENTS_SKILLS_SRC="你的路径" make sync
 ```
+
+## 仓库 skill 覆盖本地
+
+你现在可以把仓库里的一个或多个 skill 同步覆盖到本地（支持 `cursor` / `openclaw` / `agents`）。
+
+### 1) 覆盖本地指定 skill
+
+```bash
+make repo-to-local PLATFORM=cursor SKILLS="solution-design-workflow,git-safety-workflow"
+```
+
+### 2) 先预览再覆盖（推荐）
+
+```bash
+make repo-to-local-dry-run PLATFORM=openclaw SKILLS="openclaw-reminder"
+```
+
+### 3) 覆盖某个平台全部 skill
+
+```bash
+make repo-to-local-all PLATFORM=agents
+```
+
+对应 dry-run：
+
+```bash
+make repo-to-local-all-dry-run PLATFORM=agents
+```
+
+### 4) 自定义本地目标目录（可选）
+
+```bash
+CURSOR_SKILLS_DST="你的路径" OPENCLAW_SKILLS_DST="你的路径" AGENTS_SKILLS_DST="你的路径" \
+make repo-to-local PLATFORM=cursor SKILLS="your-skill-name"
+```
