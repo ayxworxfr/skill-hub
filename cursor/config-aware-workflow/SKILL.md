@@ -1,42 +1,98 @@
 ---
 name: config-aware-workflow
-description: Edits code with configuration awareness by checking related config files, runtime paths, and environment assumptions before changing behavior. Use when modifying systems driven by YAML, JSON, env vars, file paths, schedules, feature flags, or runtime configuration.
+description: Use when behavior depends on YAML, JSON, env vars, paths, feature flags, runtime arguments, schedules, build config, model/provider config, or file-system conventions.
 ---
 
 # Config Aware Workflow
 
 ## 目标
 
-避免“只改代码不看配置”导致的假修复。
+避免只改代码不看配置导致假修复。配置、读取方、默认值和使用方必须一起检查。
 
-## 工作流
+## 适用范围
+
+优先用于：
+
+- 修改 YAML、JSON、env、路径、运行参数、feature flag
+- 行为由配置驱动
+- 代码看似正确但运行结果和配置不符
+- 改字段名、模型名、provider、目录、文件格式、构建配置
+
+## 强制流程
 
 ### 1. 找配置来源
 
-- 先确认行为是由代码、配置、环境变量还是运行参数决定
-- 查找相关 `yml`、`yaml`、`json`、`.env`、常量定义、路径配置
+定位所有来源：
 
-### 2. 建立映射
+- 配置文件
+- 环境变量
+- 命令行参数
+- 默认常量
+- 构建工具配置
+- CI/部署配置
+- 用户本地文件路径
 
-- 配置项名是什么
-- 在哪里读取
-- 传到了哪些对象或函数
-- 最终影响哪个分支或输出
+### 2. 建映射链
 
-### 3. 修改时同步检查
+必须追踪：
 
-- 改字段名时，同时检查读取方和使用方
-- 改路径时，同时检查目录创建、文件命名、下游消费方
-- 改开关时，同时检查默认值和缺省行为
+```text
+配置项 -> 读取位置 -> 解析/默认值 -> 传递对象 -> 使用分支 -> 输出/副作用
+```
 
-### 4. 验证
+不要只改配置项名，不检查读取和消费。
 
-- 至少验证一个正常场景
-- 如有条件，再验证一个缺省或异常场景
+### 3. 同步适配
 
-## 适用信号
+改动时同步处理：
 
-- 用户提到配置文件
-- 改动涉及环境变量、文件路径、运行参数
-- 系统行为依赖 YAML/JSON
-- 代码本身没问题，但运行结果不符合预期
+- 字段名和类型
+- 默认值和缺省行为
+- 路径存在性、目录创建、文件命名
+- 下游消费方
+- 文档或示例配置
+- 测试 fixture
+
+### 4. 验证配置场景
+
+至少验证：
+
+- 正常配置路径
+- 缺省配置路径
+- 错误配置或缺失配置的失败方式
+
+## 检查门
+
+以下情况不得完成：
+
+- 不知道配置在哪里读取
+- 不知道默认值来自哪里
+- 改了配置但没改测试/示例/文档中的同名项
+- 没检查路径是否存在或由谁创建
+- 没验证缺省场景
+
+## 禁止输出模式
+
+| 禁止输出 | 替代动作 |
+|---|---|
+| “改配置就行” | 列出读取方、使用方和默认值 |
+| “代码没问题” | 说明配置链路如何影响行为 |
+| “路径应该存在” | 检查创建方或运行前置条件 |
+| “默认值兜底” | 说明缺省行为是否符合产品预期 |
+| “只改这里” | 搜索同名配置和测试 fixture |
+
+## 输出格式
+
+```markdown
+配置链路：
+- 来源：
+- 读取：
+- 默认值：
+- 使用：
+- 输出：
+
+验证：
+- 正常配置：
+- 缺省配置：
+- 风险：
+```
