@@ -1,49 +1,23 @@
-SHELL := /bin/bash
+PYTHON ?= python3
+PLATFORMS ?= cursor claude openclaw agents
+LINK_SCRIPT := scripts/link_skills.py
 
-.PHONY: sync sync-commit sync-commit-default repo-to-local repo-to-local-dry-run repo-to-local-all repo-to-local-all-dry-run status
+.PHONY: help link link-dry-run unlink unlink-dry-run status
 
-sync:
-	@./scripts/sync_local_skills.sh
+help:
+	@$(PYTHON) $(LINK_SCRIPT) --help
 
-sync-commit:
-	@if [ -z "$(MSG)" ]; then \
-		echo "用法: make sync-commit MSG='chore: 同步本地 skills'"; \
-		exit 1; \
-	fi
-	@./scripts/sync_local_skills.sh
-	@./scripts/sync.sh "$(MSG)"
+link:
+	@$(PYTHON) $(LINK_SCRIPT) link --platforms $(PLATFORMS)
 
-sync-commit-default:
-	@./scripts/sync_local_skills.sh
-	@./scripts/sync.sh "chore: sync local skills"
+link-dry-run:
+	@$(PYTHON) $(LINK_SCRIPT) link --platforms $(PLATFORMS) --dry-run
 
-repo-to-local:
-	@if [ -z "$(PLATFORM)" ] || [ -z "$(SKILLS)" ]; then \
-		echo "用法: make repo-to-local PLATFORM=cursor SKILLS='skill-a,skill-b'"; \
-		exit 1; \
-	fi
-	@./scripts/sync_repo_to_local.sh --platform "$(PLATFORM)" --skills "$(SKILLS)"
+unlink:
+	@$(PYTHON) $(LINK_SCRIPT) unlink --platforms $(PLATFORMS)
 
-repo-to-local-dry-run:
-	@if [ -z "$(PLATFORM)" ] || [ -z "$(SKILLS)" ]; then \
-		echo "用法: make repo-to-local-dry-run PLATFORM=cursor SKILLS='skill-a,skill-b'"; \
-		exit 1; \
-	fi
-	@./scripts/sync_repo_to_local.sh --platform "$(PLATFORM)" --skills "$(SKILLS)" --dry-run
-
-repo-to-local-all:
-	@if [ -z "$(PLATFORM)" ]; then \
-		echo "用法: make repo-to-local-all PLATFORM=cursor"; \
-		exit 1; \
-	fi
-	@./scripts/sync_repo_to_local.sh --platform "$(PLATFORM)" --all
-
-repo-to-local-all-dry-run:
-	@if [ -z "$(PLATFORM)" ]; then \
-		echo "用法: make repo-to-local-all-dry-run PLATFORM=cursor"; \
-		exit 1; \
-	fi
-	@./scripts/sync_repo_to_local.sh --platform "$(PLATFORM)" --all --dry-run
+unlink-dry-run:
+	@$(PYTHON) $(LINK_SCRIPT) unlink --platforms $(PLATFORMS) --dry-run
 
 status:
 	@git status --short
