@@ -10,6 +10,8 @@ tidy = **小步、可逆、不改行为**的结构整理。每次 tidy 单独 co
 
 tidy 是为后续 feature / fix 让路而做的就近整理，**不是大重构**。大重构（跨多文件 / 改抽象层 / 涉及多模块迁移）→ 用 `refactoring` skill。
 
+S/B 拆分顺序由 building 主文 Step 7 + plan 卡指定；本 reference 只规定 tidy 子模式产出**什么样的 S 类**。
+
 ## tidy vs refactoring vs feature
 
 | 维度 | tidy（本子模式） | refactoring skill | feature 子模式 |
@@ -63,48 +65,19 @@ tidy 前后都跑一次测试。**禁止**：
 
 每个 tidy 动作单独 commit。多个 tidy 可以连续做，但**不要塞同一个 commit**。
 
-### 4. 永远先 tidy 再 feature
-
-顺序：tidy commit → 测试绿 → feature commit → 测试绿。
-
-不允许 tidy 与 feature 同 commit。
-
-### 5. 范围边界
+### 4. 范围边界
 
 如果发现 tidy 越做越大（跨多文件 / 涉及抽象层 / 涉及调用方）→ 停下，转去用 `refactoring` skill 规划。
 
-## AI 反模式预防
+## tidy 专属禁止输出
 
-| 反模式 | tidy 子模式如何防 |
-|---|---|
-| **silent behavior change** | 跑现有测试 + 检查日志 / 错误消息字面值 |
-| **顺手改了 feature** | 强制 S/B 拆分；触及行为变更 → 立即停止本次 tidy |
-| **重命名漏网** | 用编辑器/语言服务器的 rename 而不是文本替换；grep 验证 |
-| **抽函数过度** | 一次只抽一个；如果抽完看着别扭 → 内联回去再想 |
-| **重命名后语义偏移** | 新名字必须比旧名字更准确，不只是更短 / 更长 |
-
-## 检查门
-
-进入 commit 前必须确认：
-
-- [ ] 函数签名 / 错误码 / 错误消息 / 日志输出 / 持久化格式 全部未变
-- [ ] 现有测试全绿（前后各跑一次）
-- [ ] 没有为通过测试而改测试
-- [ ] 单文件 / 紧邻函数范围内（超出 → 转 refactoring skill）
-- [ ] 一次一个动作（多动作 → 拆多次 commit）
-- [ ] commit message 用 `tidy:` 前缀
-- [ ] 后续 feature commit 与本次 tidy 分开
-
-任一未通过 → 回滚本次 tidy，重做。
-
-## 禁止输出
+主文"共用禁止输出"已覆盖"结构和功能一起改"等通用项；以下是 tidy 子模式补充：
 
 | 禁止 | 替代 |
 |---|---|
 | "顺便修了个 bug" | 拆出来：tidy commit + 单独 fix commit |
 | "顺便加了个参数" | 拆出来：tidy commit + 单独 feat commit |
 | "测试改一下让它过" | tidy 不允许；改测试 = 改了行为 |
-| "重构 + 实现一起" | 拆 S/B 顺序 |
 | "整体重新组织一下" | 转 refactoring skill |
 | "应该不会有副作用" | 跑测试 + 检查日志字面值 |
 | "改了一些命名" | 列具体 rename 列表 + grep 验证 |
@@ -128,14 +101,3 @@ tidy 前后都跑一次测试。**禁止**：
 - message：`tidy: <动作描述>`
 - 与后续 feature commit 分开
 ```
-
-## 与 building 主流程的对接
-
-- 触发：复杂度阈值命中（函数 > 20 行 / 嵌套 > 3 / 参数 > 4 / 模块 > 100 行核心逻辑）且判断为历史欠账
-- 顺序：tidy 子模式产出 S 类 commit → 跑测试绿 → feature / fix / config 子模式产出 B 类 commit
-- 边界：单文件 / 紧邻函数；超出转 `refactoring` skill
-
-## 参考来源
-
-- Kent Beck, *Tidy First?* (O'Reilly 2023)
-- Martin Fowler, *Refactoring*（取动作列表，去重至 tidy 范围）

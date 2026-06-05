@@ -108,8 +108,3 @@ planning 输出的失败模式 ↔ 验证表里 High 级条目，每条对应一
 - 未覆盖：
 - 人审：是 / 否（否 → 留待用户审）
 ```
-
-## 参考来源
-
-- Kent Beck, *Test-Driven Development: By Example* (Addison-Wesley 2002)
-- Simon Willison, "Red/Green TDD for Coding Agents" (2025)

@@ -205,7 +205,6 @@ Worktree 规则：
 - Windows 下把 `python3` 换成 `python`
 - 用户明确批准某次 force push / `--no-verify` 时，临时注释 hook 或在 `DANGEROUS_PATTERNS` 里加白名单
 - hook 不传达知识，只做硬阻断；规则解释仍由本 skill 承担
-- 完整能力对照见 [engineering-skills/references/extension-capabilities.md](../engineering-skills/references/extension-capabilities.md)
 
 ## 检查门
 

@@ -195,9 +195,3 @@ planning 产出的"失败模式 ↔ 验证表"直接喂给 building 作为：
 - TDD 红绿节奏的 RED 测试来源
 - Final Gate 必检项
 - 越界检查依据（如失败模式涉及调用方 → building 必须验证调用方）
-
-## 参考来源
-
-- Klein, G. "Performing a Project Premortem", Harvard Business Review, 2007
-- Simon Willison, "Red/Green TDD for Coding Agents" (2025)
-- USENIX 2025 — Package Hallucinations 研究
