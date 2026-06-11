@@ -1,0 +1,30 @@
+{
+  "name": "skill-hub",
+  "version": "1.0.0",
+  "description": "Personal Claude Code / Cursor skill collection",
+  "type": "module",
+  "bin": {
+    "skill-hub": "bin/install.mjs"
+  },
+  "files": [
+    "bin",
+    "cursor/building",
+    "cursor/debugging",
+    "cursor/designing-frontend",
+    "cursor/engineering-skills",
+    "cursor/git-safety",
+    "cursor/planning",
+    "cursor/reading-code",
+    "cursor/refactoring",
+    "cursor/reviewing-code",
+    "cursor/verifying",
+    "cursor/README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ayxworxfr/skill-hub.git"
+  }
+}

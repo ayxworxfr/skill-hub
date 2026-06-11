@@ -6,3 +6,12 @@ Thumbs.db
 .vscode/
 *.swp
 *.swo
+
+# Python 本地缓存
+__pycache__/
+*.py[cod]
+
+# Node / npm 本地产物
+node_modules/
+*.tgz
+npm-debug.log*

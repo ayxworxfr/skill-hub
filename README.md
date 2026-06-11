@@ -5,30 +5,63 @@
 ## 目录结构
 
 ```text
-cursor/
-  _template/
-    SKILL.md
-  your-skill-name/
-    SKILL.md
-openclaw/
-  _template/
-    SKILL.md
-  your-skill-name/
-    SKILL.md
-agents/
-  your-skill-name/
-    SKILL.md
+skill-hub/
+  cursor/              # Cursor / Claude Code 工作流 skills（对外 npx 安装源）
+    _template/
+    planning/
+    building/
+    ...
+  openclaw/            # OpenClaw skills
+  agents/              # ~/.agents/skills
+  bin/install.mjs      # npx 安装脚本
+  scripts/link_skills.py
+  Makefile
 ```
 
 平台约定：
 
-- `cursor/`：Cursor skills，同时供 Claude Code 使用。
+- `cursor/`：Cursor / Claude Code 工作流 skills，也是 `npx skill-hub` 的安装源。
 - `openclaw/`：OpenClaw skills。
 - `agents/`：`~/.agents/skills` skills。
-- `scripts/link_skills.py`：跨平台软链接管理脚本。
+- `bin/install.mjs`：从 `cursor/` 复制安装到本地 skill 目录（供 npx 使用）。
+- `scripts/link_skills.py`：跨平台软链接管理脚本（仓库维护者用）。
 - `Makefile`：常用命令入口。
 
-## 快速使用
+## 安装（其他人用 npx）
+
+从 GitHub 拉取仓库，把 `cursor/` 里的 skill **平铺**安装到本地 skill 目录（每个 skill 独立目录，不嵌套 `skill-hub/`）：
+
+```bash
+# Claude Code · 用户级 → ~/.claude/skills/<skill>/
+npx -y --package=git+https://github.com/ayxworxfr/skill-hub.git skill-hub --force
+
+# Claude Code · 项目级 → <cwd>/.claude/skills/<skill>/
+npx -y --package=git+https://github.com/ayxworxfr/skill-hub.git skill-hub --project --force
+
+# Cursor · 用户级 → ~/.cursor/skills/<skill>/
+npx -y --package=git+https://github.com/ayxworxfr/skill-hub.git skill-hub --cursor --force
+
+# Cursor · 项目级 → <cwd>/.cursor/skills/<skill>/
+npx -y --package=git+https://github.com/ayxworxfr/skill-hub.git skill-hub --cursor --project --force
+```
+
+| 参数 | 作用 |
+|---|---|
+| 默认 | 写入用户级 Claude 目录 |
+| `--project` | 改写到当前工作目录 |
+| `--cursor` | 改写到 `.cursor/skills/` 而非 `.claude/skills/` |
+| `--force` | 覆盖已存在同名 skill 目录（默认遇冲突跳过） |
+
+升级：重跑同一条命令并加 `--force`。
+
+本地克隆仓库后也可直接运行：
+
+```bash
+make install          # Claude Code 用户级
+make install-cursor   # Cursor 用户级
+```
+
+## 仓库维护者：软链接同步
 
 ### 1) 预览链接变更
 
