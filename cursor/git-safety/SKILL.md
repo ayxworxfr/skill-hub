@@ -1,6 +1,6 @@
 ---
 name: git-safety
-description: Protects user changes and repo history during git operations by enforcing per-file diff review, sensitive-file detection, worktree isolation for high-risk tasks, and explicit authorization for destructive actions. Use when the user says "commit"/"提交"/"暂存"/"push"/"PR"/"整理 diff"/"清理工作区", when the working tree has unrelated changes, when multiple agents work in parallel, or before any stage/commit/push action.
+description: Performs git operations safely: stage/commit/push/PR/diff cleanup. Use when the user says "commit"/"提交"/"暂存"/"push"/"PR"/"整理 diff"/"清理工作区", when the working tree has unrelated changes, when multiple agents work in parallel, or before any stage/commit/push action. Skip for:pure code editing without git intent.
 ---
 
 # Git Safety

@@ -1,6 +1,6 @@
 ---
 name: reviewing-code
-description: Reviews diffs, PRs, commits, staged changes, and code snippets for correctness, regression risk, and test gaps. Outputs evidence-backed findings (Critical/Major/Minor) with location, trigger, and fix direction. Use when the user asks for review, says "is this safe to merge", "look for risks", or shares a diff/commit/snippet for risk assessment.
+description: Reviews diffs, PRs, commits, staged changes, or code snippets for correctness, regression risk, and test gaps. Use when the user asks for review, says "is this safe to merge"/"看一下风险"/"review 一下"/"帮我审审"/"有没有问题", or shares a diff/commit/snippet for risk assessment. Skip for:implementing changes, debugging an active failure, or planning.
 ---
 
 # Reviewing Code

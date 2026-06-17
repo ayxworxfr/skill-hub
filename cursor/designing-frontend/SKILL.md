@@ -1,6 +1,6 @@
 ---
 name: designing-frontend
-description: Designs and implements frontend UI by enforcing layout contract before visual decoration. Walks through task type, project context, structure diagram, layout contract, component contract, visual decisions, and verification. Use when the user builds/modifies React/Vue/Next/Vite pages or components, plans layouts, designs dashboards, fixes broken layouts, designs frontend architecture, or makes UI technical choices.
+description: Designs and implements frontend UI/layouts/components for React/Vue/Next/Vite projects. Use when the user builds or modifies pages/components, plans layouts, designs dashboards, fixes broken layouts, or makes UI technical choices. Skip for:backend logic, non-UI bugs, pure CSS tweaks under 10 lines, or plan-only requests.
 ---
 
 # Designing Frontend

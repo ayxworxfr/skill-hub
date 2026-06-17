@@ -1,6 +1,6 @@
 ---
 name: verifying
-description: Verifies a change with concrete evidence (commands, results, coverage paths) before claiming completion. Use when finishing implementation/bugfix/refactor/frontend change/config change/pre-commit work, or when the user asks "did it work" / "verify this" / "is it really fixed" / "ready to merge". Other skills (building, debugging, refactoring, designing-frontend, git-safety) reference this skill at their verification step.
+description: Verifies a change actually works before claiming completion. Use when finishing implementation/bugfix/refactor/frontend/config work, or when the user asks "did it work"/"verify this"/"is it really fixed"/"真的修好了吗"/"ready to merge"/"能合了吗". Other skills (building, debugging, refactoring, designing-frontend, git-safety) reference this at their verification step.
 ---
 
 # Verifying

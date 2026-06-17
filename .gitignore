@@ -4,6 +4,7 @@ Thumbs.db
 # 编辑器与系统临时文件
 .idea/
 .vscode/
+.cursor/
 *.swp
 *.swo
 

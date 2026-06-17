@@ -1,6 +1,6 @@
 ---
 name: debugging
-description: Diagnoses and fixes failures by tracing symptom to verifiable root cause, then applying the minimal correct change. Forbids symptom-layer patches (try-catch swallowing, default-value masking, "should be X" guesses). Use when the user shares a traceback, failing test, regression, wrong result, flaky behavior, environment-specific failure, or asks "why does this fail" / "定位一下" / "修这个问题" / "为什么 X".
+description: Diagnoses and fixes failures from tracebacks, failing tests, regressions, wrong results, flaky behavior, or environment-specific issues. Use when the user shares an error/stack trace, says "why does this fail"/"定位一下"/"修这个问题"/"为什么 X"/"报错了"/"测试挂了"/"复现不出来", or asks for root-cause analysis. Skip for:feature work without a reported failure, code review, or planning.
 ---
 
 # Debugging

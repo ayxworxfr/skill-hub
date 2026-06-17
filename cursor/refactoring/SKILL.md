@@ -1,6 +1,6 @@
 ---
 name: refactoring
-description: Reorganizes, splits, renames, or extracts shared logic while preserving intended behavior. Defines a behavior signature first, builds a baseline check, then changes structure in small steps with per-stage verification. Use when the user says "重构"/"整理结构"/"抽公共逻辑"/"拆大文件"/"代码太乱"/"refactor", or wants to improve maintainability without changing behavior.
+description: Reorganizes, splits, renames, or extracts shared logic while preserving behavior. Use when the user says "重构"/"整理结构"/"抽公共逻辑"/"拆大文件"/"代码太乱"/"refactor"/"rename"/"extract", or asks to improve maintainability without behavior change. Skip for:feature additions, bug fixes, or any behavior change.
 ---
 
 # Refactoring

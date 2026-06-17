@@ -1,6 +1,6 @@
 ---
 name: reading-code
-description: Reads and explains existing code by building a structured map (entry, units, side effects, dependencies), tracing the main path, and listing impact range with evidence. Use when the user wants to understand a module, trace a call chain, follow data flow, estimate impact before editing, decode a large file, or asks "what does this do" / "how does this work" / "where is X used".
+description: Reads and explains existing code: modules, call chains, data flow, impact analysis. Use when the user wants to understand a module, trace a call chain, follow data flow, estimate impact before editing, decode a large file, or asks "what does this do"/"how does this work"/"where is X used"/"这段代码做什么"/"这怎么调"/"改了会影响什么". Skip for:writing new code, debugging an active failure, or pure planning.
 ---
 
 # Reading Code
