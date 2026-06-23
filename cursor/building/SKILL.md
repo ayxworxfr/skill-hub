@@ -151,6 +151,7 @@ planning 输出的执行卡是任务契约。按 P1：
 
 feature 子模式额外约束（test / config / tidy 见对应 reference）：
 
+- 加载 [code-craftsmanship.md](references/code-craftsmanship.md)，对照欠抽象（U）/ 过抽象（O）双向信号，判断顺序走完
 - 覆盖任务契约里的全部关键分支（P6）
 - 失败模式表中 High 级**先写 RED 测试**（P3）
 - 失败路径有显式处理（P6）

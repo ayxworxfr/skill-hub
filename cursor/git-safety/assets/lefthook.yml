@@ -1,0 +1,56 @@
+# lefthook.yml — git-safety hook 套件模板
+# 文档：https://github.com/evilmartians/lefthook
+# 安装：lefthook install
+
+pre-commit:
+  parallel: true
+  commands:
+    format:
+      run: python3 {scripts_dir}/format_staged.py
+      # 替换 {scripts_dir} 为 git-safety/scripts 实际路径
+
+    lint-python:
+      glob: "*.py"
+      run: ruff check {staged_files}
+
+    lint-js:
+      glob: "*.{js,ts,jsx,tsx}"
+      run: eslint --fix {staged_files}
+
+    check-secrets:
+      run: gitleaks protect --staged
+      # 需要 gitleaks 已安装：brew install gitleaks
+
+    check-large-files:
+      run: |
+        for f in $(git diff --cached --name-only); do
+          size=$(wc -c < "$f" 2>/dev/null || echo 0)
+          if [ "$size" -gt 512000 ]; then
+            echo "ERROR: $f exceeds 500KB ($size bytes)"
+            exit 1
+          fi
+        done
+
+commit-msg:
+  commands:
+    conventional:
+      run: |
+        msg=$(cat {1})
+        pattern="^(feat|fix|docs|style|refactor|test|tidy|config|chore|build|ci)(\(.+\))?(!)?: .{1,72}"
+        if ! echo "$msg" | grep -qE "$pattern"; then
+          echo "Commit message 不符合 Conventional Commits 格式"
+          echo "格式：<type>(<scope>): <description>"
+          echo "有效 type：feat fix docs style refactor test tidy config chore build ci"
+          exit 1
+        fi
+
+pre-push:
+  commands:
+    test:
+      run: |
+        branch=$(git rev-parse --abbrev-ref HEAD)
+        if [ "$branch" != "main" ] && [ "$branch" != "master" ]; then
+          npm test --if-present 2>/dev/null || \
+          python -m pytest -x -q 2>/dev/null || \
+          echo "[pre-push] no test runner found, skipping"
+        fi

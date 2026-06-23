@@ -1,0 +1,32 @@
+# gitleaks.toml — secret 扫描配置模板
+# 放到仓库根目录，gitleaks 会自动读取
+# 文档：https://github.com/gitleaks/gitleaks
+
+title = "gitleaks config"
+
+[extend]
+useDefault = true  # 继承 gitleaks 内置规则集
+
+# 白名单：排除已知安全的路径 / 模式
+[[allowlists]]
+description = "test fixtures and example configs"
+paths = [
+  "tests/fixtures/.*",
+  "docs/examples/.*",
+  ".*\\.example$",
+  ".*\\.sample$",
+]
+regexes = [
+  # 示例 / 占位符 token，按需添加
+  "your[-_]?api[-_]?key[-_]?here",
+  "example[-_]?token",
+  "REPLACE[-_]?ME",
+]
+
+# 自定义额外规则（按需取消注释）
+# [[rules]]
+# id = "custom-internal-token"
+# description = "公司内部 token 格式"
+# regex = "INT-[A-Z0-9]{32}"
+# severity = "critical"
+# tags = ["api", "internal"]
