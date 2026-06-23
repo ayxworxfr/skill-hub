@@ -1,6 +1,6 @@
 ---
 name: git-safety
-description: Performs git operations safely: stage/commit/push/PR/diff cleanup. Use when the user says "commit"/"提交"/"暂存"/"push"/"PR"/"整理 diff"/"清理工作区", when the working tree has unrelated changes, when multiple agents work in parallel, or before any stage/commit/push action. Skip for:pure code editing without git intent.
+description: Performs git operations safely:stage/commit/push/PR/diff cleanup. Use when the user says "commit"/"提交"/"暂存"/"push"/"PR"/"整理 diff"/"清理工作区", when the working tree has unrelated changes, when multiple agents work in parallel, or before any stage/commit/push action. Skip for:pure code editing without git intent.
 ---
 
 # Git Safety
